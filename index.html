@@ -90,16 +90,16 @@
             <span>&#128204; NTPC TOWNSHIP, SOLAPUR</span>
         </div>
         <div class="datarow">
-            <div class="datacol"><span>102</span><br> PM10(ug/m<sup>3</sup>)</div>
-            <div class="datacol"><span>101</span><br> PM20(ug/m<sup>3</sup>)</div>
-            <div class="datacol"><span>12</span><br> CO(ppm)</div>
-            <div class="datacol"><span>4.5</span><br> CO<sub>2</sub>(ppm) :</div>
+            <div class="datacol"><span id="pm10">8</span><br> PM10(ug/m<sup>3</sup>)</div>
+            <div class="datacol"><span id="pm25">8</span><br> PM25(ug/m<sup>3</sup>)</div>
+            <div class="datacol"><span id="co">0</span><br> CO(ppm)</div>
+            <div class="datacol"><span id="co2">415</span><br> CO<sub>2</sub>(ppm) :</div>
         </div>
         <div class="datarow">
-            <div class="datacol"><span>23</span><br> NO<sub>2</sub>(ppm)</div>
-            <div class="datacol"><span>24</span><br> SO<sub>2</sub>(ppm)</div>
-            <div class="datacol"><span id="temperature">29</span><sup>&#8451;</sup><span>&#127777;</span><br> Temperature</div>
-            <div class="datacol"><span id="humidity">58</span><span>&#128167;</span><br> Humidity</div>
+            <div class="datacol"><span id="NO2">23</span><br> NO<sub>2</sub>(ppm)</div>
+            <div class="datacol"><span id="SO2">24</span><br> SO<sub>2</sub>(ppm)</div>
+            <div class="datacol"><span id="temperature">37.25</span><sup>&#8451;</sup><span>&#127777;</span><br> Temperature</div>
+            <div class="datacol"><span id="humidity">28.15</span><span>&#128167;</span><br> Humidity</div>
             <!-- Humidity  &#128166; &#128167; temperature &#127777; &#8451;-->
         </div>
         <div class="logorow">
@@ -123,9 +123,16 @@
                     count = (count - 1);
                     console.log('arr count is : ', count)
                     console.log('last arr data:', myObj[count])
+                    document.getElementById("SensorTimestamp").innerHTML = myObj[count].SensorTimestamp;
+                    document.getElementById("pm10").innerHTML = myObj[count].PM10;
+                    document.getElementById("pm25").innerHTML = myObj[count].PM25;
+                    document.getElementById("co2").innerHTML = myObj[count].CO2;
+                    document.getElementById("co").innerHTML = myObj[count].CO;
+                    document.getElementById("NO2").innerHTML = myObj[count].NO2;
+                    document.getElementById("SO2").innerHTML = myObj[count].SO2;
                     document.getElementById("temperature").innerHTML = myObj[count].Temperature;
                     document.getElementById("humidity").innerHTML = myObj[count].RelativeHumidity;
-                    document.getElementById("SensorTimestamp").innerHTML = myObj[count].SensorTimestamp;
+
                     // console.log(myObj[count].Temperature)
 
                 }
