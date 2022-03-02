@@ -31,8 +31,8 @@
         
         .container {
             background-color: black;
-            max-width: 192px;
-            height: 96px;
+            max-width: 320px;
+            height: 128px;
             color: white;
             padding: 1px;
         }
@@ -43,7 +43,6 @@
             display: flex;
             -ms-flex-wrap: wrap;
             flex-wrap: wrap;
-            font-size: 8px;
             justify-content: center;
         }
         
@@ -53,7 +52,7 @@
             flex: 0 0 auto;
             width: auto;
             max-width: none;
-            padding-right: 8px;
+            padding-right: 10px;
         }
     </style>
     <title>TestPage</title>
@@ -74,7 +73,7 @@
 
         <script type="text/javascript">
             var xhr = new XMLHttpRequest();
-            xhr.withCredentials = true;
+            xhr.withCredentials = false;
 
             xhr.onreadystatechange = function() {
 
@@ -83,10 +82,10 @@
                     var myObj = JSON.parse(xhr.responseText);
                     // console.log("received data : ", myObj)
                     var count = Object.keys(myObj).length;
-                    count = (count - 1);
+                    //count = (count - 1);
                     console.log('arr count is : ', count)
                     console.log('last arr data:', myObj[count])
-                    document.getElementById("temperature").innerHTML = myObj[count];
+                    document.getElementById("temperature").innerHTML = myObj['data'].email;
                     // console.log(myObj[count].Temperature)
                     // console.log(myObj[count].Temperature);
                     // console.log(myObj[count].RelativeHumidity);
