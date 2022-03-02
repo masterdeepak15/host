@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+        
+        .mt-1 {
+            margin-top: 1px;
+        }
+        
+        .ml-1 {
+            margin-left: 1px;
+        }
+        
+        .mr-1 {
+            margin-right: 1px;
+        }
+        
+        .mb-1 {
+            margin-bottom: 1px;
+        }
+        
+        .container {
+            background-color: black;
+            max-width: 192px;
+            height: 96px;
+            color: white;
+            padding: 1px;
+        }
+        
+        .row {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-wrap: wrap;
+            flex-wrap: wrap;
+            font-size: 8px;
+            justify-content: center;
+        }
+        
+        .col {
+            -webkit-box-flex: 0;
+            -ms-flex: 0 0 auto;
+            flex: 0 0 auto;
+            width: auto;
+            max-width: none;
+            padding-right: 8px;
+        }
+    </style>
+    <title>TestPage</title>
+</head>
+
+<body>
+    <input type="hidden" name="enckey" id="enckey" value="iDdkUddDU0EU1EG=E9PEUUEDUEkTFFUk">
+    <input type="hidden" name="id" id="id" value="00D069520494">
+    <div class="container">
+        <div class="row">
+            <div class="row mt-1">
+                <div class="col">
+                    received data is : <span id="temperature"></span><span> &#8451;</span>
+                    <!--&#8457; for F, &#8451; for c -->
+                </div>
+            </div>
+        </div>
+
+        <script type="text/javascript">
+            var xhr = new XMLHttpRequest();
+            xhr.withCredentials = true;
+
+            xhr.onreadystatechange = function() {
+
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    console.log('request load successfully')
+                    var myObj = JSON.parse(xhr.responseText);
+                    // console.log("received data : ", myObj)
+                    var count = Object.keys(myObj).length;
+                    count = (count - 1);
+                    console.log('arr count is : ', count)
+                    console.log('last arr data:', myObj[count])
+                    document.getElementById("temperature").innerHTML = myObj[count];
+                    // console.log(myObj[count].Temperature)
+                    // console.log(myObj[count].Temperature);
+                    // console.log(myObj[count].RelativeHumidity);
+                }
+            };
+
+            // xhr.open("GET", "https://10.21.54.241/iot/telemetry/environment?devieid=00D069520494", true);
+            xhr.open("GET", "https://reqres.in/api/users/2", true)
+                // xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded ");
+                // xhr.setRequestHeader("Accept", "application/x-www-form-urlencoded ");
+                // xhr.setRequestHeader("Content-type", "text/plain");
+                // xhr.setRequestHeader("Accept", "text/plain");
+                // // xhr.setRequestHeader("Content-type", "application/json");
+                // xhr.setRequestHeader("Accept", "application/json");
+            xhr.send(null);
+        </script>
+
+
+
+</body>
+
+</html>
