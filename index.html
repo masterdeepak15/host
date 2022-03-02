@@ -11,67 +11,105 @@
         * {
             padding: 0;
             margin: 0;
-        }
-        
-        .mt-1 {
-            margin-top: 1px;
-        }
-        
-        .ml-1 {
-            margin-left: 1px;
-        }
-        
-        .mr-1 {
-            margin-right: 1px;
-        }
-        
-        .mb-1 {
-            margin-bottom: 1px;
+            background-color: black;
+            font-size: 6px;
         }
         
         .container {
-            background-color: black;
-            max-width: 320px;
-            height: 128px;
+            width: 192px;
+            height: 96px;
             color: white;
-            padding: 1px;
+            padding: 2px;
+            border: 1px red solid;
+            box-sizing: border-box;
         }
         
-        .row {
-            display: -webkit-box;
-            display: -ms-flexbox;
+        .statusrow {
             display: flex;
-            -ms-flex-wrap: wrap;
-            flex-wrap: wrap;
-            justify-content: center;
         }
         
-        .col {
-            -webkit-box-flex: 0;
-            -ms-flex: 0 0 auto;
-            flex: 0 0 auto;
-            width: auto;
-            max-width: none;
-            padding-right: 10px;
+        .statusrow>div {
+            flex: 1;
+            font-size: 5px;
+        }
+        
+        .statusrow>div:nth-child(even) {
+            text-align: end;
+        }
+        
+        .titalrow {
+            text-align: center;
+            font-weight: bold;
+            padding-top: 2px;
+            color: rgb(16, 86, 151);
+        }
+        
+        .titalrow>span {
+            font-size: 10px;
+        }
+        
+        .datarow {
+            display: flex;
+            padding-top: 2px;
+            text-align: center;
+        }
+        
+        .datarow>div {
+            flex: 1;
+        }
+        
+        .datacol>span {
+            font-size: 9px;
+            color: skyblue;
+        }
+        
+        .logorow {
+            display: flex;
+        }
+        
+        .logorow>div {
+            flex: 1;
+            font-size: 10px;
+            font-family: Arial, Helvetica, sans-serif;
+            font-weight: bold;
+            text-align: center;
+            padding-top: 2px;
+            color: red;
         }
     </style>
     <title>TestPage</title>
 </head>
 
 <body>
-    <input type="hidden" name="enckey" id="enckey" value="iDdkUddDU0EU1EG=E9PEUUEDUEkTFFUk">
-    <input type="hidden" name="id" id="id" value="00D069520494">
-    <div class="container">
-        <div class="row">
-            <div class="row mt-1">
-                <div class="col">
-                    received data is : <span id="temperature"></span><span> &#8451;</span>
-                    <!--&#8457; for F, &#8451; for c -->
-                </div>
-            </div>
+    <div class="container mr">
+        <div class="statusrow">
+            <div> Smart Environmental System</div>
+            <div> Last Update on : 2022/12/24 21:12:222<span id="SensorTimestamp"></span> </div>
         </div>
+        <div class="titalrow">
+            <span>&#128204; NTPC TOWNSHIP, SOLAPUR</span>
+        </div>
+        <div class="datarow">
+            <div class="datacol"><span>102</span><br> PM10(ug/m<sup>3</sup>)</div>
+            <div class="datacol"><span>101</span><br> PM20(ug/m<sup>3</sup>)</div>
+            <div class="datacol"><span>12</span><br> CO(ppm)</div>
+            <div class="datacol"><span>4.5</span><br> CO<sub>2</sub>(ppm) :</div>
+        </div>
+        <div class="datarow">
+            <div class="datacol"><span>23</span><br> NO<sub>2</sub>(ppm)</div>
+            <div class="datacol"><span>24</span><br> SO<sub>2</sub>(ppm)</div>
+            <div class="datacol"><span id="temperature">29</span><sup>&#8451;</sup><span>&#127777;</span><br> Temperature</div>
+            <div class="datacol"><span id="humidity">58</span><span>&#128167;</span><br> Humidity</div>
+            <!-- Humidity  &#128166; &#128167; temperature &#127777; &#8451;-->
+        </div>
+        <div class="logorow">
+            <div>ador</div>
+            <div>Bajaj</div>
+        </div>
+    </div>
 
-        <script type="text/javascript">
+    <script type="text/javascript">
+        function update() {
             var xhr = new XMLHttpRequest();
             xhr.withCredentials = false;
 
@@ -82,29 +120,28 @@
                     var myObj = JSON.parse(xhr.responseText);
                     // console.log("received data : ", myObj)
                     var count = Object.keys(myObj).length;
-                    //count = (count - 1);
+                    count = (count - 1);
                     console.log('arr count is : ', count)
                     console.log('last arr data:', myObj[count])
-                    document.getElementById("temperature").innerHTML = myObj['data'].email;
+                    document.getElementById("temperature").innerHTML = myObj[count].Temperature;
+                    document.getElementById("humidity").innerHTML = myObj[count].RelativeHumidity;
+                    document.getElementById("SensorTimestamp").innerHTML = myObj[count].SensorTimestamp;
                     // console.log(myObj[count].Temperature)
-                    // console.log(myObj[count].Temperature);
-                    // console.log(myObj[count].RelativeHumidity);
+
                 }
             };
 
-            // xhr.open("GET", "https://10.21.54.241/iot/telemetry/environment?devieid=00D069520494", true);
-            xhr.open("GET", "https://reqres.in/api/users/2", true)
-                // xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded ");
-                // xhr.setRequestHeader("Accept", "application/x-www-form-urlencoded ");
-                // xhr.setRequestHeader("Content-type", "text/plain");
-                // xhr.setRequestHeader("Accept", "text/plain");
-                // // xhr.setRequestHeader("Content-type", "application/json");
-                // xhr.setRequestHeader("Accept", "application/json");
-            xhr.send(null);
-        </script>
+            xhr.open("GET", "http://10.21.54.241/iot/telemetry/environment?devieid=00D069520494");
+            xhr.send();
+        };
+    </script>
 
-
-
+    <script type="text/javascript">
+        update();
+        setInterval(function() {
+            update();
+        }, 30000);
+    </script>
 </body>
 
 </html>
